@@ -23,7 +23,7 @@ def authenticate(request):
 
 
 def run_metrics_endpoint(request):
-    metrics = []
+    data = {}
     try:
         if not authenticate(request):
             return jsonify({'error': 'NOT_AUTHENTICATED'}), 401
@@ -31,16 +31,16 @@ def run_metrics_endpoint(request):
         if request.method != 'POST':
             return jsonify({'error': 'METHOD_NOT_ALLOWED'}), 405
 
-        metrics = request.get_json()
-        if metrics is None:
+        data = request.get_json()
+        if data.get('metrics') is None:
             return jsonify({'error': {'metrics': 'field not set'}}), 400
         
-        for metric in metrics:
+        for metric in data.get('metrics', []):
             print('metric-fire {}'.format(json.dumps(metric)))
 
         return jsonify({}), 204
     except Exception as e:
-        logging.error('exception {} for metrics {}'.format(str(e), json.dumps(metrics)))
+        logging.error('exception {} for metrics {}'.format(str(e), json.dumps(data)))
         return jsonify({
             'status': 'error',
             'msg': str(e)
