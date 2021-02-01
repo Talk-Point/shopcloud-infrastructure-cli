@@ -1,0 +1,1 @@
+gcloud functions deploy --project='shopcloud-analytics' metric-gateway-api --runtime python38 --trigger-http --allow-unauthenticated --entry-point='run_metrics_endpoint' --region="europe-west3" --env-vars-file=".env.yaml"

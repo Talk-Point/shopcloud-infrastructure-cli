@@ -20,6 +20,7 @@ setup_args = dict(
 
 install_requires = [
     'requests',
+    'shopcloud_secrethub'
 ]
 
 if __name__ == '__main__':
